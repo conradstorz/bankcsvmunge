@@ -53,9 +53,9 @@ def clean_qbo_file(lines, text):
     clean = []
     for line in lines[::-1]: #in reverse order [::-1] so we see memo before name lines
         logging.debug(line, extra=d)
-        line = re.sub(r' +', ' ', line) #remove duplicate spaces from within line
-        line = re.sub(r' \d\d\d\d ', ' ', line) #remove 4 digit date from within line
         if line.startswith(memotag):
+            line = re.sub(r' +', ' ', line) #remove duplicate spaces from within line
+            line = re.sub(r' \d\d\d\d ', ' ', line) #remove 4 digit date from within line
             line = line.replace(memotag, '').lstrip() #remove memotag
             for t in text: #remove each occurance from line
                 line = line.replace(t, '').lstrip() #strip leading and trailing whitespace
@@ -80,9 +80,7 @@ if __name__ == "__main__":
     #Attempt to write results to cleanfile
     try:
         with open(cleanfile, 'w') as f:
-            for s in result:
-                f.write("%s\n" % s)
-
+            f.writelines(result)
     except Exception as e:
         logging.exception("Error in writing %s", cleanfile, extra=d)
         logging.warning(str(e), extra=d)
