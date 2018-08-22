@@ -80,7 +80,9 @@ if __name__ == "__main__":
     #Attempt to write results to cleanfile
     try:
         with open(cleanfile, 'w') as f:
-            f.writelines(result)
+            for s in result:
+                f.write("%s\n" % s)
+
     except Exception as e:
         logging.exception("Error in writing %s", cleanfile, extra=d)
         logging.warning(str(e), extra=d)
